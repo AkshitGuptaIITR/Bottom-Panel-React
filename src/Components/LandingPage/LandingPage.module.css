@@ -11,6 +11,9 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 100px;
+  padding: 24px;
+  align-items: center;
+  text-align: center;
 }
 .bottomSheetHandler > h1 {
   display: flex;
@@ -30,3 +33,9 @@
   display: flex;
   justify-content: space-evenly;
 }
+
+.bottomSheethead{
+  color: #0f2c59;
+  margin: 0;
+}
+

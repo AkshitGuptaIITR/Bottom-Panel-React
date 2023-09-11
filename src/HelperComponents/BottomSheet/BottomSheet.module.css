@@ -44,50 +44,33 @@
 }
 
 .halfScreenTransition {
-  transition: 200ms ease-out;
-  animation: halfSpring 600ms ease-out;
-  transform: translateY(45%);
+  transition: 300ms ease-out !important;
 }
 
 .fullScreenTransition {
-  transition: ease 0ms;
-  animation: fullSpring 700ms ease-out;
+  transition: ease 300ms !important;
 }
 
 .startScreenTransition {
-  transition: 200ms ease-out;
-  animation: spring 700ms ease-out;
-  /* transform: translateY(94%); */
-}
-
-@keyframes fullSpring {
-  0% {
-    opacity: 0;
-    transform: translateY(90%);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(0%);
-  }
-  100% {
-    transform: translateY(5%);
-  }
-}
-
-@keyframes halfSpring {
-  0% {
-    /* opacity: 0; */
-    transform: translateY(94%);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(40%);
-  }
-  100% {
-    transform: translateY(45%);
-  }
+  transition: 300ms ease-out !important; 
 }
 
 .children{
-  padding: 24px;
+  display: flex;
+  width: 95%;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+  overflow-y: auto;
+}
+
+.tags{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.tags button{
+  margin: 12px;
+  font-size: 1rem;
 }

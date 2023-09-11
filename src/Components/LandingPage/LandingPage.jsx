@@ -14,33 +14,63 @@ const LandingPage = () => {
     <div className={style.container}>
       <div className={style.bottomSheetHandler}>
         <h1>
-          <p>Hello,</p> To operate bottom sheet component use these buttons!
+          <p>Hello,</p> To operate bottom sheet use the bottom line to operate the sheet component!
         </h1>
-        <div className={style.buttons}>
-          <Button
-            onClick={() => handleScreenSnap("")}
-            color={"#213555"}
-            textColor={"white"}
-          >
-            Open
-          </Button>
-          <Button
-            color={"#9A3B3B"}
-            textColor={"white"}
-            onClick={() => handleScreenSnap("half")}
-          >
-            Half Screen
-          </Button>
-          <Button
-            onClick={() => handleScreenSnap("full")}
-            color={"#6C3428"}
-            textColor={"white"}
-          >
-            Full Screen
-          </Button>
-        </div>
       </div>
-      <BottomSheet screenSnap={screenSnap} />
+      <BottomSheet screenSnap={screenSnap} handleScreenSnap={handleScreenSnap}>
+        <h1 className={style.bottomSheethead}>Hi...</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt ipsa
+          quisquam non ipsum porro nihil culpa sint laboriosam nostrum
+          perspiciatis necessitatibus doloremque nam maxime aut architecto optio
+          minima, fuga quaerat.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt ipsa
+          quisquam non ipsum porro nihil culpa sint laboriosam nostrum
+          perspiciatis necessitatibus doloremque nam maxime aut architecto optio
+          minima, fuga quaerat.
+        </p>
+        <h2 className={style.bottomSheethead}>Check-2</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt ipsa
+          quisquam non ipsum porro nihil culpa sint laboriosam nostrum
+          perspiciatis necessitatibus doloremque nam maxime aut architecto optio
+          minima, fuga quaerat.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt ipsa
+          quisquam non ipsum porro nihil culpa sint laboriosam nostrum
+          perspiciatis necessitatibus doloremque nam maxime aut architecto optio
+          minima, fuga quaerat.
+        </p>
+        <h1 className={style.bottomSheethead}>Hi...2</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt ipsa
+          quisquam non ipsum porro nihil culpa sint laboriosam nostrum
+          perspiciatis necessitatibus doloremque nam maxime aut architecto optio
+          minima, fuga quaerat.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt ipsa
+          quisquam non ipsum porro nihil culpa sint laboriosam nostrum
+          perspiciatis necessitatibus doloremque nam maxime aut architecto optio
+          minima, fuga quaerat.
+        </p>
+        <h2 className={style.bottomSheethead}>Check-3</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt ipsa
+          quisquam non ipsum porro nihil culpa sint laboriosam nostrum
+          perspiciatis necessitatibus doloremque nam maxime aut architecto optio
+          minima, fuga quaerat.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt ipsa
+          quisquam non ipsum porro nihil culpa sint laboriosam nostrum
+          perspiciatis necessitatibus doloremque nam maxime aut architecto optio
+          minima, fuga quaerat.
+        </p>
+      </BottomSheet>
     </div>
   );
 };
