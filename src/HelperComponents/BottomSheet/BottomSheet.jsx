@@ -136,6 +136,8 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
         }}
         id="container"
         onMouseDown={startResize}
+        onTouchStart={startResize}
+        onTouchEnd={stopResize}
         onMouseUp={stopResize}
         ref={containerRef}
       >
