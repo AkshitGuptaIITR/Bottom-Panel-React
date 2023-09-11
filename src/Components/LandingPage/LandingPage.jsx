@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import style from "./LandingPage.module.css";
 import BottomSheet from "../../HelperComponents/BottomSheet/BottomSheet";
-import Button from "../../HelperComponents/Button/Button";
 
 const LandingPage = () => {
   const [screenSnap, setScreenSnap] = useState("");
