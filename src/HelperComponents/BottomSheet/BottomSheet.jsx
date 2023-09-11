@@ -7,7 +7,7 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
   const [isResizing, setIsResizing] = useState(false);
   const [startY, setStartY] = useState(0);
   const [startHeight, setStartHeight] = useState(0);
-  const [containerHeight, setContainerHeight] = useState(30);
+  const [containerHeight, setContainerHeight] = useState(80);
   const [animationClass, setAnimationClass] = useState("");
 
   const containerRef = useRef(null);
@@ -35,7 +35,7 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
     setAnimationClass(style.startScreenTransition);
     setContainerHeight(10);
     setTimeout(() => {
-      setContainerHeight(30);
+      setContainerHeight(80);
     }, 300);
   };
 
@@ -71,6 +71,8 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
     if (isResizing) {
       document.addEventListener("mousemove", throttledResize);
       document.addEventListener("mouseup", stopResize);
+      document.addEventListener("touchmove", throttledResize);
+      document.addEventListener("touchend", stopResize);
     } else {
       var ht = window.innerHeight;
       if (containerHeight >= ht / 3 && containerHeight <= (ht * 2) / 3)
@@ -80,12 +82,50 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
 
       document.removeEventListener("mousemove", throttledResize);
       document.removeEventListener("mouseup", stopResize);
+      document.removeEventListener("touchmove", throttledResize);
+      document.removeEventListener("touchend", stopResize);
     }
     return () => {
       document.removeEventListener("mousemove", throttledResize);
       document.removeEventListener("mouseup", stopResize);
+      document.removeEventListener("touchmove", throttledResize);
+      document.removeEventListener("touchend", stopResize);
     };
   }, [isResizing]);
+
+  const handleUp = () => {
+    var ht = window.innerHeight;
+    if (containerRef.current.offsetHeight > ht / 2)
+      handleTop();
+    else
+      handleMiddle();
+  };
+
+  const handleDown = () => {
+    var ht = window.innerHeight;
+    if (containerRef.current.offsetHeight > ht - 50)
+      handleMiddle();
+    else
+      handleBottom();
+  };
+
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      console.log(e.key);
+      switch (e.key) {
+        case "ArrowUp":
+          handleUp();
+          break;
+        case "ArrowDown":
+          handleDown();
+          break;
+        default:
+          break;
+      }
+    };
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [])
 
   return (
     <>
@@ -94,6 +134,7 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
         style={{
           height: containerHeight + "px",
         }}
+        id="container"
         onMouseDown={startResize}
         onMouseUp={stopResize}
         ref={containerRef}
