@@ -17,7 +17,7 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
     setAnimationClass(style.fullScreenTransition);
     setContainerHeight(ht);
     setTimeout(() => {
-      setContainerHeight(ht - 25);
+      setContainerHeight(ht - 80);
     }, 300);
   };
 
