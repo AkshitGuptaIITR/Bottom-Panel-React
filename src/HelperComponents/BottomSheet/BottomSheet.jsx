@@ -118,6 +118,13 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
           break;
       }
     };
+    // const scrollableDiv = document.getElementById("component");
+    // scrollableDiv.addEventListener("wheel", (e) => {
+    //   e.preventDefault();
+    // });
+    // document.addEventListener("wheel", (e) => {
+    //   e.preventDefault();
+    // });
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, []);
@@ -134,6 +141,7 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
       >
         <div
           className={style.bottomSheetController}
+          id="component"
           // onClick={startResize}
           onMouseDown={startResize}
           // onTouchStart={startResize}
