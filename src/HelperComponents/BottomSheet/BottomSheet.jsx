@@ -15,7 +15,7 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
   const handleTop = () => {
     var ht = window.innerHeight;
     setAnimationClass(style.fullScreenTransition);
-    setContainerHeight(ht);
+    setContainerHeight(ht - 40);
     setTimeout(() => {
       setContainerHeight(ht - 80);
     }, 300);
@@ -26,7 +26,7 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
     setAnimationClass(style.halfScreenTransition);
     setContainerHeight(ht / 2 + 75);
     setTimeout(() => {
-      setContainerHeight(ht / 2 + 50);
+      setContainerHeight(ht / 2);
     }, 300);
   };
 
@@ -95,7 +95,7 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
 
   const handleUp = () => {
     var ht = window.innerHeight;
-    if (containerRef.current.offsetHeight > ht / 6) handleTop();
+    if (containerRef.current.offsetHeight > ht / 2) handleTop();
     else handleMiddle();
   };
 

@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   background-color: white;
-  position: absolute;
+  position: fixed;
   overflow: hidden;
   bottom: 0;
   z-index: 4;
