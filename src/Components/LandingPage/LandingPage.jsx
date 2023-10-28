@@ -13,7 +13,8 @@ const LandingPage = () => {
     <div className={style.container}>
       <div className={style.bottomSheetHandler}>
         <h1>
-          <p>Hello,</p> To operate bottom sheet use the bottom line to operate the sheet component!
+          <p>Hello,</p> To operate bottom sheet use the bottom line to operate
+          the sheet component!
           <p style={{ fontSize: 16 }}>Developed by: Akshit Gupta</p>
         </h1>
       </div>

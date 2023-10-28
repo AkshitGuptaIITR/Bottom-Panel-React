@@ -41,7 +41,7 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
 
   const startResize = (e) => {
     setIsResizing(true);
-    setStartY(e.clientY);
+    setStartY(e.clientY || e.targetTouches[0].screenY);
     setStartHeight(containerHeight);
   };
 
@@ -58,12 +58,13 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
 
   const throttledResize = throttle((e) => {
     if (isResizing) {
-      const deltaY = e.clientY - startY;
+      console.log(e.clientY || e?.targetTouches[0]?.screenY);
+      const deltaY = (e.clientY || e?.targetTouches[0]?.screenY) - startY;
       setContainerHeight(startHeight - deltaY * 3);
     }
   }, 30);
 
-  const stopResize = () => {
+  const stopResize = (e) => {
     setIsResizing(false);
   };
 
@@ -79,7 +80,6 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
         handleMiddle();
       else if (containerHeight < ht / 3) handleBottom();
       else handleTop();
-
       document.removeEventListener("mousemove", throttledResize);
       document.removeEventListener("mouseup", stopResize);
       document.removeEventListener("touchmove", throttledResize);
@@ -95,23 +95,18 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
 
   const handleUp = () => {
     var ht = window.innerHeight;
-    if (containerRef.current.offsetHeight > ht / 2)
-      handleTop();
-    else
-      handleMiddle();
+    if (containerRef.current.offsetHeight > ht / 6) handleTop();
+    else handleMiddle();
   };
 
   const handleDown = () => {
     var ht = window.innerHeight;
-    if (containerRef.current.offsetHeight > ht - 50)
-      handleMiddle();
-    else
-      handleBottom();
+    if (containerRef.current.offsetHeight > ht - 25) handleMiddle();
+    else handleBottom();
   };
 
   useEffect(() => {
     const handleKeyPress = (e) => {
-      console.log(e.key);
       switch (e.key) {
         case "ArrowUp":
           handleUp();
@@ -123,9 +118,9 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
           break;
       }
     };
-    window.addEventListener('keydown', handleKeyPress)
-    return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [])
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, []);
 
   return (
     <>
@@ -135,25 +130,37 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
           height: containerHeight + "px",
         }}
         id="container"
-        onMouseDown={startResize}
-        onTouchStart={startResize}
-        onTouchEnd={stopResize}
-        onMouseUp={stopResize}
         ref={containerRef}
       >
-        <div className={style.bottomSheetController} onMouseDown={startResize}>
+        <div
+          className={style.bottomSheetController}
+          // onClick={startResize}
+          onMouseDown={startResize}
+          // onTouchStart={startResize}
+          // onTouchEnd={stopResize}
+          onTouchMove={startResize}
+          onMouseUp={stopResize}
+        >
           <div className={style.line}></div>
-        </div>
-        <div className={style.tags}>
-          <Button onClick={handleTop} textColor={"white"} color={"#213555"}>
-            Top
-          </Button>
-          <Button onClick={handleMiddle} textColor={"white"} color={"#9A3B3B"}>
-            Middle
-          </Button>
-          <Button onClick={handleBottom} textColor={"white"} color={"#6C3428"}>
-            Bottom
-          </Button>
+          <div className={style.tags}>
+            <Button onClick={handleTop} textColor={"white"} color={"#213555"}>
+              Top
+            </Button>
+            <Button
+              onClick={handleMiddle}
+              textColor={"white"}
+              color={"#9A3B3B"}
+            >
+              Middle
+            </Button>
+            <Button
+              onClick={handleBottom}
+              textColor={"white"}
+              color={"#6C3428"}
+            >
+              Bottom
+            </Button>
+          </div>
         </div>
         <div className={style.children}>{props.children}</div>
       </div>
