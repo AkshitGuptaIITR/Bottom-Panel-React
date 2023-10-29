@@ -24,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "transpile": "babel src -d dist --copy-files",
+    "transpile": "babel src/HelperComponent -d dist --copy-files",
     "prepublishOnly": "npm run transpile",
     "publish:npm": "babel src/HelperComponent -d dist --copy-files"
   },
