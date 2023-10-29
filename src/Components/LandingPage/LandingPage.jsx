@@ -13,7 +13,7 @@ const LandingPage = () => {
     <div className={style.container}>
       <div className={style.bottomSheetHandler}>
         <h1>
-          <p>Hello,</p> To operate Bottom Pane:
+          <p>Hello,</p> To operate Bottom Panel:
           <ul style={{ color: "black", fontSize: 20, textAlign: "left" }}>
             <li> You can drag it up and down.</li>
             <li> Use Navigation Buttoms at the bottom.</li>
