@@ -1,9 +1,10 @@
 {
   "name": "bottom-panel-react",
   "version": "1.0.1",
-  "main": "dist/index.js",
+  "main": "dist/BottomPanel.js",
   "dependencies": {
     "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
     "@babel/preset-react": "^7.22.15",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -23,7 +24,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "publish:npm": "del dist && babel src/BottomPanel -d dist --copy-files"
+    "transpile": "babel src -d dist --copy-files",
+    "prepublishOnly": "npm run transpile",
+    "publish:npm": "babel src/BottomPanel -d dist --copy-files"
   },
   "repository": {
     "type": "git",
