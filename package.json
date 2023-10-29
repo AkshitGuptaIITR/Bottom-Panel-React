@@ -1,7 +1,7 @@
 {
   "name": "bottom-panel-react",
   "version": "1.0.4",
-  "main": "dist/index.js",
+  "main": "dist/BottomPanel/BottomPanel.js",
   "dependencies": {
     "@babel/core": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
