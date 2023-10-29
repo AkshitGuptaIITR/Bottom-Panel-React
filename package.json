@@ -1,6 +1,6 @@
 {
   "name": "bottom-panel-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "dependencies": {
     "@babel/core": "^7.23.2",
@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "publish:npm": "babel src/HelperComponents -d dist --copy-files"
+    "publish:npm": "del dist && babel src/BottomPanel -d dist --copy-files"
   },
   "repository": {
     "type": "git",

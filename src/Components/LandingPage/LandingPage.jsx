@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import style from "./LandingPage.module.css";
-import BottomSheet from "../../HelperComponents/BottomSheet/BottomSheet";
+import BottomPanel from "../../BottomPanel/BottomPanel";
 
 const LandingPage = () => {
   const [screenSnap, setScreenSnap] = useState("");
@@ -54,7 +54,7 @@ const LandingPage = () => {
           />
         </div>
       </div>
-      <BottomSheet panelState={screenSnap} getPanelState={handleScreenSnap}>
+      <BottomPanel panelState={screenSnap} getPanelState={handleScreenSnap}>
         <h1 className={style.bottomSheethead}>Hi...</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt ipsa
@@ -107,7 +107,7 @@ const LandingPage = () => {
           perspiciatis necessitatibus doloremque nam maxime aut architecto optio
           minima, fuga quaerat.
         </p>
-      </BottomSheet>
+      </BottomPanel>
     </div>
   );
 };
