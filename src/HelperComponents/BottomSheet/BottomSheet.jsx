@@ -3,7 +3,22 @@ import React, { useState, useRef, useEffect } from "react";
 import style from "./BottomSheet.module.css";
 import Button from "../Button/Button";
 
-const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
+const BottomSheet = function ({
+  panelClass = "",
+  panelBodyCSS = {},
+  panelDragIcon = null,
+  topHeight = null,
+  bottomHeight = null,
+  middleheight = null,
+  isVisible = true,
+  isKeysFunctional = true,
+  isNavigationButtons = true,
+  isMiddleFunctional = true,
+  throttleTime = 5,
+  panelState = "bottom",
+  getPanelState = () => { },
+  ...props
+}) {
   const [isResizing, setIsResizing] = useState(false);
   const [startY, setStartY] = useState(0);
   const [startHeight, setStartHeight] = useState(0);
@@ -13,30 +28,41 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
   const containerRef = useRef(null);
 
   const handleTop = () => {
-    var ht = window.innerHeight;
+    getPanelState("top");
+    var ht = topHeight || window.innerHeight;
     setAnimationClass(style.fullScreenTransition);
     setContainerHeight(ht - 40);
-    setTimeout(() => {
-      setContainerHeight(ht - 80);
-    }, 300);
+    setTimeout(
+      () => {
+        setContainerHeight(ht - 80);
+      },
+      window.innerWidth >= 758 ? 300 : 150
+    );
   };
 
   const handleMiddle = () => {
-    var ht = window.innerHeight;
+    getPanelState("middle");
+    var ht = middleheight || window.innerHeight;
     setAnimationClass(style.halfScreenTransition);
-    setContainerHeight(ht / 2 + 75);
-    setTimeout(() => {
-      setContainerHeight(ht / 2);
-    }, 300);
+    setContainerHeight(ht / 2 + 50);
+    setTimeout(
+      () => {
+        setContainerHeight(ht / 2 + 50);
+      },
+      window.innerWidth >= 758 ? 300 : 150
+    );
   };
 
   const handleBottom = () => {
-    handleScreenSnap("");
+    getPanelState("bottom");
     setAnimationClass(style.startScreenTransition);
     setContainerHeight(10);
-    setTimeout(() => {
-      setContainerHeight(80);
-    }, 300);
+    setTimeout(
+      () => {
+        setContainerHeight(bottomHeight || 80);
+      },
+      window.innerWidth >= 758 ? 300 : 150
+    );
   };
 
   const startResize = (e) => {
@@ -58,11 +84,10 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
 
   const throttledResize = throttle((e) => {
     if (isResizing) {
-      console.log(e.clientY || e?.targetTouches[0]?.screenY);
       const deltaY = (e.clientY || e?.targetTouches[0]?.screenY) - startY;
       setContainerHeight(startHeight - deltaY * 3);
     }
-  }, 30);
+  }, throttleTime);
 
   const stopResize = (e) => {
     setIsResizing(false);
@@ -75,11 +100,18 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
       document.addEventListener("touchmove", throttledResize);
       document.addEventListener("touchend", stopResize);
     } else {
-      var ht = window.innerHeight;
-      if (containerHeight >= ht / 3 && containerHeight <= (ht * 2) / 3)
+      var ht = topHeight || window.innerHeight;
+      if (
+        containerHeight >= ht / 3 &&
+        containerHeight <= (ht * 2) / 3 &&
+        isMiddleFunctional
+      ) {
         handleMiddle();
-      else if (containerHeight < ht / 3) handleBottom();
-      else handleTop();
+      } else if (containerHeight < ht / 3) {
+        handleBottom();
+      } else {
+        handleTop();
+      }
       document.removeEventListener("mousemove", throttledResize);
       document.removeEventListener("mouseup", stopResize);
       document.removeEventListener("touchmove", throttledResize);
@@ -94,47 +126,52 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
   }, [isResizing]);
 
   const handleUp = () => {
-    var ht = window.innerHeight;
-    if (containerRef.current.offsetHeight > ht / 2) handleTop();
+    var ht = middleheight || window.innerHeight;
+    if (containerRef.current.offsetHeight > ht / 2 || !isMiddleFunctional)
+      handleTop();
     else handleMiddle();
   };
 
   const handleDown = () => {
-    var ht = window.innerHeight;
+    var ht = bottomHeight || window.innerHeight;
     if (containerRef.current.offsetHeight > ht - 25) handleMiddle();
     else handleBottom();
   };
 
   useEffect(() => {
-    const handleKeyPress = (e) => {
-      switch (e.key) {
-        case "ArrowUp":
-          handleUp();
-          break;
-        case "ArrowDown":
-          handleDown();
-          break;
-        default:
-          break;
-      }
-    };
-    // const scrollableDiv = document.getElementById("component");
-    // scrollableDiv.addEventListener("wheel", (e) => {
-    //   e.preventDefault();
-    // });
-    // document.addEventListener("wheel", (e) => {
-    //   e.preventDefault();
-    // });
-    window.addEventListener("keydown", handleKeyPress);
-    return () => window.removeEventListener("keydown", handleKeyPress);
-  }, []);
+    if (isKeysFunctional) {
+      const handleKeyPress = (e) => {
+        switch (e.key) {
+          case "ArrowUp":
+            handleUp();
+            break;
+          case "ArrowDown":
+            handleDown();
+            break;
+          default:
+            break;
+        }
+      };
+      window.addEventListener("keydown", handleKeyPress);
+      return () => window.removeEventListener("keydown", handleKeyPress);
+    }
+  }, [isKeysFunctional]);
 
-  return (
+  useEffect(() => {
+    if (panelState === "middle") handleMiddle();
+    else if (panelState === "top") handleTop();
+    else handleBottom();
+  }, [panelState]);
+
+  return !isVisible ? (
+    <></>
+  ) : (
     <>
       <div
-        className={`${style.container} ${animationClass}`}
+        className={`${style.container} ${animationClass} ${panelClass}`}
         style={{
           height: containerHeight + "px",
+          ...panelBodyCSS,
         }}
         id="container"
         ref={containerRef}
@@ -142,25 +179,27 @@ const BottomSheet = ({ screenSnap = "", handleScreenSnap, ...props }) => {
         <div
           className={style.bottomSheetController}
           id="component"
-          // onClick={startResize}
           onMouseDown={startResize}
-          // onTouchStart={startResize}
-          // onTouchEnd={stopResize}
           onTouchMove={startResize}
           onMouseUp={stopResize}
         >
-          <div className={style.line}></div>
-          <div className={style.tags}>
+          {panelDragIcon ? panelDragIcon : <div className={style.line}></div>}
+          <div
+            className={style.tags}
+            style={{ display: isNavigationButtons ? "flex" : "none" }}
+          >
             <Button onClick={handleTop} textColor={"white"} color={"#213555"}>
               Top
             </Button>
-            <Button
-              onClick={handleMiddle}
-              textColor={"white"}
-              color={"#9A3B3B"}
-            >
-              Middle
-            </Button>
+            {isMiddleFunctional && (
+              <Button
+                onClick={handleMiddle}
+                textColor={"white"}
+                color={"#9A3B3B"}
+              >
+                Middle
+              </Button>
+            )}
             <Button
               onClick={handleBottom}
               textColor={"white"}

@@ -9,7 +9,7 @@
   border-top-right-radius: 36px;
   border-top-left-radius: 36px;
   display: flex;
-  transition: 200ms ease;
+  transition: 10ms ease;
   align-items: center;
   flex-direction: column;
 }
@@ -50,18 +50,32 @@
 }
 
 .halfScreenTransition {
-  transition: 300ms ease-out !important;
+  transition: 300ms !important;
 }
 
 .fullScreenTransition {
-  transition: ease 300ms !important;
+  transition: 300ms !important;
 }
 
 .startScreenTransition {
-  transition: 300ms ease-out !important; 
+  transition: 300ms !important;
 }
 
-.children{
+@media only screen and (max-width: 758px) {
+  .halfScreenTransition {
+    transition: 150ms !important;
+  }
+  
+  .fullScreenTransition {
+    transition: 150ms !important;
+  }
+  
+  .startScreenTransition {
+    transition: 150ms !important;
+  }
+}
+
+.children {
   display: flex;
   width: 95%;
   flex-direction: column;
@@ -70,13 +84,13 @@
   overflow-y: auto;
 }
 
-.tags{
+.tags {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
-.tags button{
+.tags button {
   margin: 12px;
   font-size: 1rem;
 }
