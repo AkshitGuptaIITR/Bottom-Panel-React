@@ -47,6 +47,11 @@
       "react-app/jest"
     ]
   },
+  "keywords": [
+    "react",
+    "react-bottom-panel",
+    "panel-component",
+  ],
   "browserslist": {
     "production": [
       ">0.2%",
